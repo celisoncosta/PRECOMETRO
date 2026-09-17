@@ -8,6 +8,8 @@ https://docs.djangoproject.com/en/6.1/howto/deployment/asgi/
 """
 
 import os
+from dj_static import Cling, MediaCling
+from django.core.asgi import get_asgi_application
 
 from django.core.asgi import get_asgi_application
 
