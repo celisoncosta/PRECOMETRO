@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1 class="body">Meu primeiro HTMLzinho!!!</h1>
+<h2>Meu primeiro HTMLzinho!!!</h2>
+<h3>Meu primeiro HTMLzinho!!!</h3>
+<h4>Meu primeiro HTMLzinho!!!</h4>
+<h5>Meu primeiro HTMLzinho!!!</h5>
+<h6>Meu primeiro HTMLzinho!!!</h6>
+<p>meu <strong> primeiro paragrafinho.... </strong>bla bla <u>bla bla bla blabla bla blabla</u> bla blabla bla <i> blabla bla blabla bla </i>blabla bla blabla bla blabla bla blabla bla blabla <s> bla blabla bla blabla bla blabla </s>bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla bla</p>
+<div style="height: 50px;width: 300px;background-color: #4ac1f7;"></div>
+<a href="https://www.google.com">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Nasa_blue_marble.jpg/250px-Nasa_blue_marble.jpg?utm_source=pt.wikipedia.org&utm_campaign=parser&utm_content=thumbnail" height="150px">
+Google</a>
+<form action="/" method="POST">
+    {% csrf_token %}
+    <label for="name">Nome: </label>
+    <input type="text" id="name" name="name" placeholder="Digite seu nome"/>
+    <input type="radio" id="male" name="gender" value="male" />
+    <label for="male">Masculino</label>
+    <input type="checkbox" id="female" name="gender" value="female" />
+    <label for="female">Feminino</label>
+    <input type="password" id="password" name="password" placeholder="Digite sua senha" />
+    <input type="submit" value="Enviar" />
+</form>
+
+</body>
+</html>
