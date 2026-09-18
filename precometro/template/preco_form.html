@@ -1,0 +1,39 @@
+{% extends "menu.html" %}
+{% load static %}
+
+{% block titulo %}Registrar Preço{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <h2>Registrar Preço</h2>
+    <br>
+    <form method="POST" action="">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label class="form-label">Selecione o Produto:</label>
+            <select name="produto" class="form-select">
+                <option value="1">Arroz Tipo 1</option>
+                <option value="2">Feijão Preto</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Selecione o Supermercado:</label>
+            <select name="supermercado" class="form-select">
+                <option value="1">Economico</option>
+                <option value="2">Destak</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Valor (R$):</label>
+            <input type="number" step="0.01" name="valor" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-success">Salvar Preço</button>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,34 +1,90 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Preçometro - Início</title>
 </head>
 <body>
-<h1 class="body">Meu primeiro HTMLzinho!!!</h1>
-<h2>Meu primeiro HTMLzinho!!!</h2>
-<h3>Meu primeiro HTMLzinho!!!</h3>
-<h4>Meu primeiro HTMLzinho!!!</h4>
-<h5>Meu primeiro HTMLzinho!!!</h5>
-<h6>Meu primeiro HTMLzinho!!!</h6>
-<p>meu <strong> primeiro paragrafinho.... </strong>bla bla <u>bla bla bla blabla bla blabla</u> bla blabla bla <i> blabla bla blabla bla </i>blabla bla blabla bla blabla bla blabla bla blabla <s> bla blabla bla blabla bla blabla </s>bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla bla</p>
-<div style="height: 50px;width: 300px;background-color: #4ac1f7;"></div>
-<a href="https://www.google.com">
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Nasa_blue_marble.jpg/250px-Nasa_blue_marble.jpg?utm_source=pt.wikipedia.org&utm_campaign=parser&utm_content=thumbnail" height="150px">
-Google</a>
-<form action="/" method="POST">
-    {% csrf_token %}
-    <label for="name">Nome: </label>
-    <input type="text" id="name" name="name" placeholder="Digite seu nome"/>
-    <input type="radio" id="male" name="gender" value="male" />
-    <label for="male">Masculino</label>
-    <input type="checkbox" id="female" name="gender" value="female" />
-    <label for="female">Feminino</label>
-    <input type="password" id="password" name="password" placeholder="Digite sua senha" />
-    <input type="submit" value="Enviar" />
-</form>
 
+<div class="container">
+    <br>
+    <h2>Preçometro</h2>
+    <p>Pesquise e compare os menores preços nos supermercados.</p>
+
+    <!-- Formulário com Filtro por Produto e por Categoria -->
+    <form action="" method="GET" class="mb-4">
+        {% csrf_token %}
+        <div class="row g-3">
+
+            <!-- Filtro 1: Nome do Produto -->
+            <div class="col-md-5">
+                <label for="produto" class="form-label">Produto:</label>
+                <input type="text" id="produto" name="produto" class="form-control" placeholder="Digite o nome do produto..." />
+            </div>
+
+            <!-- Filtro 2: Categoria -->
+            <div class="col-md-5">
+                <label for="categoria" class="form-label">Categoria:</label>
+                <select id="categoria" name="categoria" class="form-select">
+                    <option value="">Todas as Categoria</option>
+                    <option value="Cereais">Cereais</option>
+                    <option value="Laticínios">Laticínios</option>
+                    <option value="Hortifrúti">Hortifrúti</option>
+                </select>
+            </div>
+
+            <!-- Botão de Ação -->
+            <div class="col-md-2 align-self-end">
+                <input type="submit" class="btn btn-primary w-100" value="Filtrar" />
+            </div>
+        </div>
+    </form>
+
+    <hr>
+    <br>
+
+    <!-- Tabela da Categoria: Cereais -->
+    <h3>Categoria: Cereais</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Produto</th>
+                <th scope="col">Supermercado</th>
+                <th scope="col">Preço</th>
+                <th scope="col">Hora</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Arroz Parboilizado 5kg</td>
+                <td>Economico</td>
+                <td>R$ 21,90</td>
+                <td>08:30</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Feijao</td>
+                <td>Destak</td>
+                <td>R$ 23,50</td>
+                <td>09:15</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>Arroz Parboilizado 5kg</td>
+                <td>El Camino</td>
+                <td>R$ 24,99</td>
+                <td>11:40</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
