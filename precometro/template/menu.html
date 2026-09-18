@@ -1,4 +1,3 @@
-<!-- menu.html ajustado -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -18,19 +17,20 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-        <!-- Produto -->
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'app:home' %}">Início</a>
+        </li>
+
         <li class="nav-item">
           <a class="nav-link" href="{% url 'app:produto' %}">Cadastrar Produto</a>
         </li>
 
-        <!-- Supermercado -->
         <li class="nav-item">
           <a class="nav-link" href="{% url 'app:supermercado' %}">Cadastrar Supermercado</a>
         </li>
 
-        <!-- Preço -->
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'app:preco' %}">Lançar Preço</a>
+          <a class="nav-link" href="{% url 'app:preco' %}">Registrar Preço</a>
         </li>
 
       </ul>
@@ -42,7 +42,6 @@
     {% block body %}{% endblock %}
 </div>
 
-{% block footer %}{% endblock %}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
