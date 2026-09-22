@@ -1,35 +1,56 @@
 {% extends "menu.html" %}
 {% load static %}
 
-{% block titulo %}Registrar Preço{% endblock %}
+{% block titulo %}{% if preco %}Editar{% else %}Registrar{% endif %} Preço{% endblock %}
 
 {% block body %}
 
 <div class="container">
-    <h2>Registrar Preço</h2>
+    <h2>{% if preco %}Editar{% else %}Registrar{% endif %} Preço</h2>
     <br>
     <form method="POST" action="">
         {% csrf_token %}
 
+        <!-- Campo de Busca/Seleção de Produto -->
         <div class="mb-3">
-            <label class="form-label">Selecione o Produto:</label>
-            <select name="produto" class="form-select">
-                <option value="1">Arroz Tipo 1</option>
-                <option value="2">Feijão Preto</option>
-            </select>
+            <label class="form-label">Digite ou selecione o Produto:</label>
+            <input
+                class="form-control"
+                list="listaProdutos"
+                name="produto_nome"
+                placeholder="Digite para buscar o produto..."
+                required
+                value="{% if preco %}{{ preco.produto.nome }}{% if preco.produto.marca %} ({{ preco.produto.marca }}){% endif %}{% endif %}"
+            >
+            <datalist id="listaProdutos">
+                {% for p in produtos %}
+                    <option value="{{ p.nome }}{% if p.marca %} ({{ p.marca }}){% endif %}"></option>
+                {% endfor %}
+            </datalist>
         </div>
 
+        <!-- Campo de Busca/Seleção de Supermercado -->
         <div class="mb-3">
-            <label class="form-label">Selecione o Supermercado:</label>
-            <select name="supermercado" class="form-select">
-                <option value="1">Economico</option>
-                <option value="2">Destak</option>
-            </select>
+            <label class="form-label">Digite ou selecione o Supermercado:</label>
+            <input
+                class="form-control"
+                list="listaSupermercados"
+                name="supermercado_nome"
+                placeholder="Digite para buscar o supermercado..."
+                required
+                value="{{ preco.supermercado.nome|default:'' }}"
+            >
+            <datalist id="listaSupermercados">
+                {% for s in supermercados %}
+                    <option value="{{ s.nome }}"></option>
+                {% endfor %}
+            </datalist>
         </div>
 
+        <!-- Campo de Valor -->
         <div class="mb-3">
             <label class="form-label">Valor (R$):</label>
-            <input type="number" step="0.01" name="valor" class="form-control">
+            <input type="number" step="0.01" name="valor" class="form-control" required value="{{ preco.valor|default:'' }}" placeholder="0.00">
         </div>
 
         <button type="submit" class="btn btn-success">Salvar Preço</button>

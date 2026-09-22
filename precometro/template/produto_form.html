@@ -1,29 +1,29 @@
 {% extends "menu.html" %}
 {% load static %}
 
-{% block titulo %}Cadastrar Produto{% endblock %}
+{% block titulo %}{% if produto %}Editar{% else %}Cadastrar{% endif %} Produto{% endblock %}
 
 {% block body %}
 
 <div class="container">
-    <h2>Cadastrar Produto</h2>
+    <h2>{% if produto %}Editar{% else %}Cadastrar{% endif %} Produto</h2>
     <br>
     <form method="POST" action="">
         {% csrf_token %}
-        
+
         <div class="mb-3">
             <label class="form-label">Nome do Produto:</label>
-            <input type="text" name="nome" class="form-control">
+            <input type="text" name="nome" class="form-control" required value="{{ produto.nome|default:'' }}" placeholder="Ex: Arroz Parboilizado 5kg">
         </div>
 
         <div class="mb-3">
             <label class="form-label">Marca:</label>
-            <input type="text" name="marca" class="form-control">
+            <input type="text" name="marca" class="form-control" value="{{ produto.marca|default:'' }}" placeholder="Ex: Camil (Opcional)">
         </div>
 
         <div class="mb-3">
             <label class="form-label">Categoria:</label>
-            <input type="text" name="categoria" class="form-control">
+            <input type="text" name="categoria" class="form-control" value="{{ produto.categoria|default:'' }}" placeholder="Ex: Cereais (Opcional)">
         </div>
 
         <button type="submit" class="btn btn-success">Salvar</button>

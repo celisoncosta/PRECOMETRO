@@ -1,19 +1,19 @@
 {% extends "menu.html" %}
 {% load static %}
 
-{% block titulo %}Cadastrar Supermercado{% endblock %}
+{% block titulo %}{% if supermercado %}Editar{% else %}Cadastrar{% endif %} Supermercado{% endblock %}
 
 {% block body %}
 
 <div class="container">
-    <h2>Cadastrar Supermercado</h2>
+    <h2>{% if supermercado %}Editar{% else %}Cadastrar{% endif %} Supermercado</h2>
     <br>
     <form method="POST" action="">
         {% csrf_token %}
-        
+
         <div class="mb-3">
             <label class="form-label">Nome do Supermercado:</label>
-            <input type="text" name="nome" class="form-control">
+            <input type="text" name="nome" class="form-control" required value="{{ supermercado.nome|default:'' }}" placeholder="Ex: Supermercado Econômico">
         </div>
 
         <button type="submit" class="btn btn-success">Salvar</button>
