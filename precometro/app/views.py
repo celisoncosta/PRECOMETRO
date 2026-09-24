@@ -1,17 +1,15 @@
+import datetime
 from django.shortcuts import render, redirect
 from .models import Supermercado, Produto, Preco
 
 
 # --- HOME / LISTAGEM COM FILTRO DINÂMICO ---
 def home(request):
-    # 1. Obtém os parâmetros digitados/selecionados no filtro GET
     filtro_produto = request.GET.get('produto', '')
     filtro_categoria = request.GET.get('categoria', '')
 
-    # 2. Busca inicial de todos os preços
     precos = Preco.objects.all()
 
-    # 3. Aplica os filtros se foram preenchidos na busca
     if filtro_produto:
         precos = precos.filter(produto__nome__icontains=filtro_produto)
 
@@ -21,7 +19,7 @@ def home(request):
     # Ordena pelo menor preço
     precos = precos.order_by('valor')
 
-    # 4. Busca no banco as categorias reais e únicas dos produtos cadastrados
+    # Busca no banco as categorias dos produtos cadastrados
     categorias = (
         Produto.objects.exclude(categoria__isnull=True)
         .exclude(categoria__exact='')
@@ -39,12 +37,17 @@ def home(request):
 
 
 # --- SUPERMERCADO ---
+def supermercado_list(request):
+    supermercados = Supermercado.objects.all().order_by('nome')
+    return render(request, 'supermercado_list.html', {'supermercados': supermercados})
+
+
 def supermercado_form(request):
     if request.method == 'POST':
-        nome = request.POST['nome']
+        nome = request.POST['nome'].strip().upper()
         s = Supermercado.objects.create(nome=nome)
         print(s.id)
-        return redirect('app:home')
+        return redirect('app:supermercado_list')
 
     return render(request, 'supermercado_form.html')
 
@@ -56,10 +59,10 @@ def supermercado_edit(request, pk):
         supermercado = None
 
     if request.method == 'POST':
-        supermercado.nome = request.POST['nome']
+        supermercado.nome = request.POST['nome'].strip().upper()
         supermercado.save()
         print(supermercado.id)
-        return redirect('app:home')
+        return redirect('app:supermercado_list')
 
     return render(request, 'supermercado_form.html', {'supermercado': supermercado})
 
@@ -68,19 +71,24 @@ def supermercado_delete(request, pk):
     if pk:
         supermercado = Supermercado.objects.get(pk=pk)
         supermercado.delete()
-        return redirect('app:home')
+    return redirect('app:supermercado_list')
 
 
 # --- PRODUTO ---
+def produto_list(request):
+    produtos = Produto.objects.all().order_by('nome')
+    return render(request, 'produto_list.html', {'produtos': produtos})
+
+
 def produto_form(request):
     if request.method == 'POST':
         nome = request.POST['nome']
-        marca = request.POST['marca']
-        categoria = request.POST['categoria']
+        marca = request.POST['marca'].strip().upper()
+        categoria = request.POST['categoria'].strip().upper()
 
         p = Produto.objects.create(nome=nome, marca=marca, categoria=categoria)
         print(p.id)
-        return redirect('app:home')
+        return redirect('app:produto_list')
 
     return render(request, 'produto_form.html')
 
@@ -93,11 +101,11 @@ def produto_edit(request, pk):
 
     if request.method == 'POST':
         produto.nome = request.POST['nome']
-        produto.marca = request.POST['marca']
-        produto.categoria = request.POST['categoria']
+        produto.marca = request.POST['marca'].strip().upper()
+        produto.categoria = request.POST['categoria'].strip().upper()
         produto.save()
         print(produto.id)
-        return redirect('app:home')
+        return redirect('app:produto_list')
 
     return render(request, 'produto_form.html', {'produto': produto})
 
@@ -106,7 +114,7 @@ def produto_delete(request, pk):
     if pk:
         produto = Produto.objects.get(pk=pk)
         produto.delete()
-        return redirect('app:home')
+    return redirect('app:produto_list')
 
 
 # --- PREÇO: CADASTRO COM DATALIST / AUTOCOMPLETE ---
@@ -142,7 +150,7 @@ def preco_form(request):
     })
 
 
-# --- PREÇO: EDIÇÃO COM DATALIST / AUTOCOMPLETE ---
+# --- PREÇO: EDIÇÃO COM ATUALIZAÇÃO DE DATA/HORA ---
 def preco_edit(request, pk):
     if pk:
         preco = Preco.objects.get(pk=pk)
@@ -162,6 +170,13 @@ def preco_edit(request, pk):
             preco.supermercado = supermercado_obj
             preco.produto = produto_obj
             preco.valor = request.POST['valor']
+
+            # Atualiza o campo de data/hora na edição
+            if hasattr(preco, 'data_alteracao'):
+                preco.data_alteracao = datetime.datetime.now()
+            elif hasattr(preco, 'data'):
+                preco.data = datetime.datetime.now()
+
             preco.save()
             print(preco.id)
 
